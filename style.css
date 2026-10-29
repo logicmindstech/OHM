@@ -1,0 +1,758 @@
+/* DESIGN CORE TOKENS */
+:root {
+    --pitch-black: #0B0B0B;
+    --tangerine: #FF6B00;
+    --off-white: #F5F5F3;
+    --card-border: #1F1F1F;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--pitch-black);
+    color: var(--off-white);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+    padding-bottom: 60px;
+}
+
+/* NAVIGATION HEADER */
+.ohm-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5%;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.ohm-navbar .logo {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--off-white);
+    letter-spacing: -1px;
+}
+
+.ohm-navbar .logo span {
+    color: var(--tangerine);
+}
+
+.ohm-navbar .tagline {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--tangerine);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links a {
+    color: var(--off-white);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    margin-left: 20px;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--tangerine);
+}
+
+/* HERO DIVISION */
+/* =========================================================================
+   CENTRAL HERO AUDIO PLAYER DESIGN SYSTEM
+   ========================================================================= */
+
+/* Hero Base Settings to Ensure Absolute Centering */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* I-center lahat ng direkta sa loob ng hero */
+    text-align: center;
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* 1. NOW PLAYING BOX (HORIZONTAL CENTERED BAR) */
+.now-playing-box {
+    border: 1px solid rgba(255, 102, 0, 0.4);
+    padding: 12px 20px;
+    border-radius: 6px;
+    background: rgba(26, 26, 26, 0.4);
+    margin: 20px auto;
+    width: 100%;
+    max-width: 500px; /* Nilimitahan ang max-width para maging magandang horizontal bar */
+    box-sizing: border-box;
+    display: block;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Wrapper ng Lahat ng Controls para Pantay-Pantay ang Lapad */
+.central-player-workspace {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; /* Saktong kapantay ng Now Playing horizontal bar */
+    gap: 25px; /* Agwat sa pagitan ng mga rows */
+}
+
+/* 2. MIDDLE ROW: EQUALIZER + VERTICAL VOLUME SLIDER ALIGNMENT */
+.eq-volume-alignment-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px; 
+    width: 100%; /* Gamitin ang buong 500px na lapad ng central-player-workspace */
+    height: 120px; 
+}
+
+.sound-meter-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px; /* Bahagyang nilakihan ang agwat ng mga bars para mas malinis tingnan */
+    flex-grow: 1; /* Hihilahin nito ang equalizer para pumantay sa Now Playing bar sa itaas */
+    height: 100%;
+}
+
+/* STANDING (VERTICAL) VOLUME CONTAINER SETUP */
+.volume-container-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%; /* Saktong kapantay ng 120px height ng equalizer */
+    position: relative;
+    width: 30px;
+}
+
+.volume-container-vertical .volume-icon {
+    font-size: 14px;
+    margin-top: 8px;
+    order: 2; /* Inilalagay ang icon sa pinakailalim ng nakatayong slider */
+}
+
+/* Gawing Patayo ang Volume Input Slider */
+.volume-slider-vertical {
+    appearance: none;
+    -webkit-appearance: none;
+    transform: rotate(-90deg); /* Iniikot para tumayo */
+    transform-origin: bottom center;
+    width: 95px; /* Ang haba ng slider kapag nakatayo (swak sa limit ng height) */
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 50px; /* Offset spacing dahil sa ginawang rotation transformation */
+}
+
+.volume-slider-vertical::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--tangerine, #ff6600);
+    cursor: pointer;
+}
+
+/* 3. BOTTOM ROW: HERO PLAY BUTTON + NAVIGATION ARROWS */
+.control-navigation-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Agwat sa pagitan ng arrows at main play button */
+    width: 100%;
+}
+
+/* 4. FINAL ROW: TIMER MONITOR LINE (KAPANTAY NG LENGTH NG NOW PLAYING BAR) */
+.timeline-container-unified {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%; /* Kinukuha ang buong 500px na lapad para pumantay sa upper structures */
+    box-sizing: border-box;
+}
+
+.track-timeline {
+    flex-grow: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.1);
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+
+.track-timeline::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--tangerine, #ff6600);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.time-display {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: var(--off-white, #fff);
+    opacity: 0.7;
+    min-width: 45px;
+}
+
+
+.hero-section h1 {
+    font-size: clamp(38px, 7vw, 70px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--off-white);
+    margin-bottom: 25px;
+    letter-spacing: -1.5px;
+}
+
+/* HIGHLIGHTS THE CHOSEN HERO HEADLINE WORD */
+.hero-section h1 span {
+    color: var(--tangerine);
+}
+
+.hero-section p.hero-sub {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--off-white);
+    opacity: 0.75;
+    max-width: 580px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* HERO AUDIO HUB WITH VOLUME CONTROL */
+.hero-player-hub {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* PLAY BUTTON AND RADAR ANIMATION */
+.hero-play-btn {
+    position: relative;
+    width: 75px;  /* Eksaktong bilog ang sukat */
+    height: 75px; 
+    border-radius: 50%;
+    background-color: var(--tangerine, #ff6600);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 1. TINANGGAL ANG OBLONG FOCUS OUTLINE BORDER */
+    outline: none; 
+    -webkit-tap-highlight-color: transparent; /* Para sa mobile/touch devices */
+    
+    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dagdag kalinisan: Alisin din kapag active o focus state */
+.hero-play-btn:focus,
+.hero-play-btn:active,
+.hero-play-btn:focus-visible {
+    outline: none !important;
+    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.5);
+}
+
+.hero-play-btn:hover {
+    transform: scale(1.05);
+    background-color: #ff751a; 
+}
+
+
+.hero-play-btn::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--tangerine);
+    box-sizing: border-box;
+    animation: pulse-ring 1.5s linear infinite;
+    animation-play-state: paused;
+    opacity: 0;
+}
+
+.hero-play-btn.playing::before {
+    animation-play-state: running;
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.play-icon {
+    width: 0;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid #111; /* Madilim na kulay para contrast sa orange backdrop */
+    margin-left: 5px; /* Offset push para maging optical center ang triangle */
+    display: block;
+    transition: all 0.2s ease;
+}
+
+/* Kapag nag-play, itatago ang triangle at ipapakita ang pause bars */
+.hero-play-btn.playing .play-icon {
+    display: none;
+}
+
+.pause-icon {
+    display: none;
+    justify-content: center;
+    gap: 6px;
+    width: 20px;
+    height: 22px;
+}
+
+.hero-play-btn.playing .pause-icon {
+    display: flex;
+}
+
+.pause-bar {
+    width: 6px;
+    height: 100%;
+    background-color: #111;
+    border-radius: 1px;
+}
+
+.hero-play-btn.playing .play-icon { display: none; }
+.hero-play-btn.playing .pause-icon { display: flex; }
+
+
+
+/* STEREO EQUALIZER METERS */
+.sound-meter-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 35px;
+    width: 90px;
+    flex-shrink: 0;
+}
+
+.meter-bar {
+    flex-grow: 1; /* Automatic na luluwang ang bawat indibidwal na bar depende sa screen grid size */
+    background-color: var(--off-white);
+    border-radius: 2px 2px 0 0;
+    height: 15%;
+    transition: height 0.05s ease, opacity 0.2s ease;
+    
+    background: linear-gradient(
+        to top,
+        #00d2ff 0%,    
+        #00d2ff 50%,   
+        #ff6600 50%,   
+        #ff6600 80%,   
+        #b30000 80%,   
+        #b30000 100%
+    );
+}
+
+/* When the engine detects playback, light up the spectrum */
+.sound-meter-container.active-audio-render .meter-bar {
+    opacity: 1;
+}
+
+
+
+/* OVERLAY VOLUME CONTROLLER */
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #141414;
+    border: 1px solid var(--card-border);
+    padding: 10px 15px;
+    border-radius: 30px;
+}
+
+.volume-icon {
+    font-size: 14px;
+    user-select: none;
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    background: #333;
+    border-radius: 2px;
+    outline: none;
+    accent-color: var(--tangerine);
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--tangerine);
+    cursor: pointer;
+}
+
+/* GRID CONTAINER & FILTER BAR */
+.platform-container {
+    padding: 60px 5%;
+    border-top: 1px solid var(--card-border);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--tangerine);
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--off-white);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: var(--tangerine);
+    border-color: var(--tangerine);
+    color: var(--pitch-black);
+}
+
+/* AUDIOMACK-STYLE TRACK GRID CARDS */
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.track-card {
+    background-color: #111111;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.track-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--tangerine);
+}
+
+.card-cover-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    background: #181818;
+}
+
+.cover-art {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 24px;
+    color: rgba(255,255,255,0.08);
+}
+
+.placeholder-1 { background: linear-gradient(135deg, #1A1A1A, #222); border-bottom: 3px solid var(--tangerine); }
+.placeholder-2 { background: linear-gradient(135deg, #222, #1A1A1A); border-bottom: 3px solid var(--off-white); }
+.placeholder-3 { background: linear-gradient(135deg, #151515, #262626); border-bottom: 3px solid var(--tangerine); }
+
+.card-play-overlay {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--tangerine);
+    border: none;
+    color: var(--pitch-black);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+}
+
+.track-card:hover .card-play-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.artist-tag {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--tangerine);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.track-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--off-white);
+    margin-bottom: 10px;
+}
+
+.track-description {
+    font-size: 13px;
+    color: var(--off-white);
+    opacity: 0.6;
+    font-weight: 400;
+}
+
+/* FOOTER ARCHITECTURE */
+.ohm-footer {
+    padding: 60px 5%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--off-white);
+    opacity: 0.4;
+    border-top: 1px solid var(--card-border);
+}
+
+/* DYNAMIC NOW PLAYING DISPLAY TRACKER */
+.now-playing-box {
+    border: 1px solid rgba(255, 102, 0, 0.4);
+    padding: 12px 20px;
+    border-radius: 6px;
+    background: rgba(26, 26, 26, 0.4);
+    margin: 20px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* FLOATING STICKY STATE */
+/* This class gets automatically injected by JavaScript upon scrolling down */
+.now-playing-box.sticky-floating-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    z-index: 9999;
+    
+    /* Sleek Translucency & Glassmorphism Blur Effect */
+    background: rgba(17, 17, 17, 0.75); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Enhanced Glow Profiles to stand out on dark content */
+    border: 1px solid rgba(255, 102, 0, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 102, 0, 0.15);
+}
+
+
+/* Lights up tangerine when active status is broadcasted */
+.now-playing-box.active-stream {
+    border-color: var(--tangerine);
+}
+
+.status-indicator {
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--tangerine);
+    letter-spacing: 1px;
+}
+
+#now-playing-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--off-white);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* TIMELINE AND NAVIGATION ARROW CONTROLS */
+.nav-arrow-btn {
+    background: none;
+    border: none;
+    color: var(--off-white, #fff);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.nav-arrow-btn:hover {
+    opacity: 1;
+    color: var(--tangerine, #ff6600);
+    transform: scale(1.1);
+}
+
+.timeline-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 450px;
+    margin: 15px auto 0 auto;
+}
+
+.time-display {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: var(--off-white, #fff);
+    opacity: 0.7;
+    min-width: 45px;
+}
+
+#time-remaining {
+    text-align: right;
+}
+
+.track-timeline {
+    flex-grow: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.1);
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.track-timeline::-webkit-slider-runnable-track {
+    height: 4px;
+}
+
+.track-timeline::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--tangerine, #ff6600);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: -4px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    transition: transform 0.1s ease;
+}
+
+.track-timeline::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+/* DYNAMIC SEARCH BAR LAYOUT ENGINE */
+.search-container-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 25px auto;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 4px 8px;
+    transition: border-color 0.3s ease;
+}
+
+.search-container-wrapper:focus-within {
+    border-color: var(--tangerine, #ff6600);
+}
+
+#search-input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    padding: 8px;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#search-action-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: transform 0.2s ease;
+}
+
+#search-action-btn:hover {
+    transform: scale(1.15);
+}
+
+#search-action-btn {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: right;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4); /* Subdued gray default */
+    cursor: pointer;
+    padding: 6px;
+    transition: all 0.2s ease;
+}
+
+#search-action-btn:hover {
+    color: var(--tangerine, #ff6600); /* Lights up orange on hover */
+    transform: scale(1.1);
+}
