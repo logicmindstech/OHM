@@ -1014,6 +1014,7 @@ const nowPlayingBox = document.getElementById('now-playing-display');
 const nowPlayingText = document.getElementById('now-playing-text');
 const meterContainer = document.querySelector('.sound-meter-container');
 const meterBars = document.querySelectorAll('.sound-meter-container .meter-bar');
+const searchActionBtn = document.getElementById('search-action-btn'); // Siguraduhing pareho ang spelling sa HTML ID!
 
 // Global Runtime State Management Controls
 let currentActiveGenre = "all";
@@ -1147,18 +1148,18 @@ function handleTrackSelection(activeCard) {
 // 5. MONITOR CONTROL AND DISPLAY UPDATES
 // =========================================================================
 masterPlayBtn.addEventListener('click', () => {
-    // If user clicks play button without picking a card, default assign current active local file
-    if (!audio.src || audio.src.includes("soundhelix.com")) {
-        audio.src = activeTrackObject.src;
+    // FIX: Siguraduhing kapag pinindot ang master button nang walang kanta, may prefix na 'tracks/'
+    if (!audio.src || audio.src === "" || audio.src.includes("soundhelix.com")) {
+        // Kung walang nakalagay sa src, kukunin ang unang kanta sa database at idurugtong ang folder path
+        activeTrackObject = AUDIO_DATABASE[0];
+        audio.src = "tracks/" + activeTrackObject.src;
         audio.load();
     }
     toggleMainPlayback();
 });
 
 function toggleMainPlayback() {
-    if (window.AudioContext || window.webkitAudioContext) {
-        initAudioEqualizer();
-    }
+    if (window.AudioContext || window.webkitAudioContext) initAudioEqualizer();
 
     if (audio.paused) {
         audio.play()
@@ -1166,11 +1167,41 @@ function toggleMainPlayback() {
                 masterPlayBtn.classList.add('playing');
                 updateNowPlayingUI(true);
             })
-            .catch(err => console.log("Playback interaction error handles:", err));
+            .catch(err => console.log("Playback error:", err));
     } else {
         audio.pause();
         masterPlayBtn.classList.remove('playing');
         updateNowPlayingUI(false);
+    }
+}
+
+function handleTrackSelection(activeCard) {
+    const trackId = activeCard.getAttribute('data-id');
+    const selectedTrack = AUDIO_DATABASE.find(t => String(t.id) === String(trackId));
+    
+    // Check if the current playing source matches the selected track string name
+    if (audio.src.includes(selectedTrack.src) && selectedTrack.src !== "") {
+        toggleMainPlayback();
+    } else {
+        activeTrackObject = selectedTrack;
+        
+        // Pwersahing may safe fallback: tinitiyak na may 'tracks/' folder path tuwing pumipili ng card
+        if (selectedTrack.src.startsWith("tracks/")) {
+            audio.src = selectedTrack.src;
+        } else {
+            audio.src = "tracks/" + selectedTrack.src;
+        }
+        
+        audio.load();
+        
+        if (window.AudioContext || window.webkitAudioContext) initAudioEqualizer();
+
+        audio.play()
+            .then(() => {
+                masterPlayBtn.classList.add('playing');
+                updateNowPlayingUI(true);
+            })
+            .catch(err => console.error("Playback target failed:", err));
     }
 }
 
